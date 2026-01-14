@@ -3,12 +3,12 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif; /* Recommended font, or stick to sans-serif */
 }
 
 :root {
-    --primary-color: #A91D3A; /* BSU-inspired deep red/maroon */
-    --secondary-color: #2c3e50; /* Dark text/background complement */
+    --primary-color: #A91D3A; /* BSU Red */
+    --secondary-color: #2c3e50;
     --text-light: #ecf0f1;
     --text-dark: #34495e;
     --background-light: #f4f4f4;
@@ -16,10 +16,15 @@
     --transition-speed: 0.3s;
 }
 
+html {
+    scroll-behavior: smooth;
+    /* IMPORTANT: This accounts for the fixed header when scrolling */
+    scroll-padding-top: 80px; 
+}
+
 body {
     background-color: var(--background-light);
     color: var(--text-dark);
-    scroll-behavior: smooth; /* Smooth scrolling for navigation */
 }
 
 /* --- HEADER AND NAVIGATION --- */
@@ -60,33 +65,41 @@ body {
 
 /* --- MAIN CONTENT SECTIONS --- */
 .main-content {
-    padding-top: 80px; /* Offset for fixed header */
+    /* No padding-top needed here if we use scroll-padding in html, 
+       but keeping a small buffer is safe */
+    padding-top: 0; 
 }
 
 .section {
     min-height: 100vh;
-    padding: 100px 10%;
+    padding: 80px 10%; /* Matched to header height */
     display: flex;
     align-items: center;
-    transition: opacity 1s ease-in-out; /* For fading transition if using JS */
+    justify-content: center;
 }
 
 .container {
-    max-width: 1000px;
+    width: 100%;
+    max-width: 1100px;
     margin: auto;
 }
 
 h2 {
     font-size: 36px;
     color: var(--primary-color);
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 /* --- HOME SECTION SPECIFIC --- */
 .home {
-    background: url('path/to/your/background-image.jpg') no-repeat center center/cover;
-    background-color: var(--background-dark);
+    /* UPDATED: Background Image with Overlay */
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('your-background-image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Parallax effect */
     color: var(--text-light);
     text-align: center;
 }
@@ -95,18 +108,22 @@ h2 {
     color: var(--text-light);
     font-weight: 400;
     font-size: 24px;
+    margin-bottom: 10px;
+    text-transform: none;
 }
 
 .home-content h1 {
-    font-size: 60px;
+    font-size: 55px;
     color: var(--primary-color);
     margin: 10px 0;
+    font-weight: 800;
 }
 
 .home-content h3 {
-    font-size: 28px;
+    font-size: 20px;
     font-weight: 300;
     margin-bottom: 30px;
+    color: #ddd;
 }
 
 .profile-pic-placeholder {
@@ -122,142 +139,182 @@ h2 {
     font-size: 14px;
     border: 5px solid var(--primary-color);
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    overflow: hidden; /* Ensures image stays in circle */
+}
+
+/* If you add an img tag inside the placeholder */
+.profile-pic-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .social-links a {
     color: var(--text-light);
     font-size: 28px;
-    margin: 0 10px;
-    transition: color var(--transition-speed);
+    margin: 0 15px;
+    transition: transform var(--transition-speed), color var(--transition-speed);
 }
 
 .social-links a:hover {
     color: var(--primary-color);
+    transform: translateY(-3px);
 }
 
 .btn {
     display: inline-block;
-    padding: 12px 28px;
+    padding: 12px 35px;
     background: var(--primary-color);
     color: var(--text-light);
     border-radius: 40px;
     text-decoration: none;
     font-weight: 600;
-    margin-top: 20px;
+    margin-top: 25px;
     transition: background var(--transition-speed);
 }
 
 .btn:hover {
-    background: #8b1831; /* Slightly darker shade */
+    background: #8b1831;
 }
 
-/* --- ABOUT ME SECTION SPECIFIC --- */
+/* --- ABOUT SECTION --- */
 .about {
-    background-color: var(--background-light);
+    background-color: white;
+}
+.about p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    color: var(--text-dark);
 }
 
 .bible-quote {
     margin-top: 40px;
-    padding: 20px;
+    padding: 25px;
     border-left: 5px solid var(--primary-color);
-    background-color: #e9e9e9;
+    background-color: #f9f9f9;
     font-style: italic;
-    color: var(--text-dark);
+    color: #555;
+    border-radius: 0 10px 10px 0;
 }
 
-/* --- SKILLS SECTION SPECIFIC --- */
+/* --- SKILLS SECTION (SYMMETRICAL) --- */
 .skills {
-    background-color: #e6e6e6;
+    background-color: #f4f4f4;
     text-align: center;
 }
 
 .skill-highlight {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    padding: 30px;
-    border-radius: 10px;
     margin-bottom: 40px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .skill-highlight .major {
     display: block;
-    font-size: 30px;
-    font-weight: bold;
-    margin: 10px 0;
-    color: #ffcc00; /* Gold color for highlight */
+    font-size: 28px;
+    margin-top: 10px;
+    color: var(--primary-color);
 }
 
-.skill-list ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
+/* NEW GRID SYSTEM FOR SKILLS */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    width: 100%;
 }
 
-.skill-list li {
-    background: var(--secondary-color);
-    color: var(--text-light);
-    padding: 10px 20px;
-    margin: 8px;
-    border-radius: 5px;
-    font-weight: 500;
+.skill-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border-bottom: 4px solid var(--primary-color);
 }
 
-/* --- PROJECTS SECTION SPECIFIC --- */
+.skill-box:hover {
+    transform: translateY(-5px);
+}
+
+.skill-box i {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.skill-box h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.skill-box p {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.5;
+}
+
+/* --- PROJECTS SECTION --- */
 .projects {
-    background-color: var(--background-light);
+    background-color: white;
 }
 
 .project-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 30px;
 }
 
 .project-card {
-    background-color: white;
+    background-color: #f9f9f9;
     padding: 25px;
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border-top: 3px solid var(--primary-color);
     transition: transform var(--transition-speed);
+    border: 1px solid #eee;
+    display: flex;
+    flex-direction: column;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
 .project-card h3 {
     color: var(--secondary-color);
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 8px;
 }
 
-.project-card a {
-    color: var(--primary-color);
-    text-decoration: none;
-    font-weight: 600;
+.project-card .tag {
+    font-size: 12px;
+    background: var(--primary-color);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    align-self: flex-start;
+    margin-bottom: 12px;
     display: inline-block;
-    margin-top: 10px;
 }
 
-/* --- CONTACT SECTION SPECIFIC --- */
+.project-card p {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.5;
+}
+
+/* --- CONTACT SECTION --- */
 .contact {
     background-color: var(--background-dark);
     color: var(--text-light);
     text-align: center;
 }
 
-.contact h2 {
-    color: var(--primary-color);
-}
-
 #contact-form {
     display: flex;
     flex-direction: column;
-    max-width: 500px;
+    max-width: 600px;
     margin: 30px auto;
 }
 
@@ -269,47 +326,34 @@ h2 {
     border-radius: 5px;
     background-color: #333;
     color: var(--text-light);
+    font-size: 16px;
 }
 
-#contact-form textarea {
-    resize: vertical;
+#contact-form input:focus,
+#contact-form textarea:focus {
+    outline: 2px solid var(--primary-color);
 }
 
-.contact-info {
-    margin-top: 20px;
-}
-
-/* --- FOOTER --- */
-.footer {
-    background: var(--secondary-color);
-    color: var(--text-light);
-    text-align: center;
-    padding: 20px 0;
-    font-size: 14px;
-}
-
-/* --- RESPONSIVENESS --- */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .header {
         padding: 15px 5%;
         flex-direction: column;
     }
-
     .navbar {
-        margin-top: 10px;
-        text-align: center;
+        margin-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
-
     .navbar .nav-button {
-        margin: 0 10px;
+        margin: 5px 10px;
         font-size: 14px;
     }
-
-    .section {
-        padding: 80px 5%;
-    }
-
     .home-content h1 {
-        font-size: 45px;
+        font-size: 36px;
+    }
+    .section {
+        padding: 100px 5%;
     }
 }
